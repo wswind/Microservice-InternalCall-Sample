@@ -1,4 +1,3 @@
-using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus;
@@ -12,7 +11,6 @@ using MyApi1.IntegrationEvents;
 using MyApi1.IntegrationEvents.EventHandling;
 using MyApi1.IntegrationEvents.Events;
 using RabbitMQ.Client;
-using System;
 
 namespace MyApi1
 {
@@ -32,11 +30,6 @@ namespace MyApi1
             AddIntegrationServices(services);
             AddEventBus(services);
         }
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            //builder.RegisterModule(new AutofacModule());
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
