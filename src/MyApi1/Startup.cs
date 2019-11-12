@@ -12,6 +12,7 @@ using MyApi1.IntegrationEvents;
 using MyApi1.IntegrationEvents.EventHandling;
 using MyApi1.IntegrationEvents.Events;
 using RabbitMQ.Client;
+using System;
 
 namespace MyApi1
 {
@@ -71,7 +72,7 @@ namespace MyApi1
             services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>
             {
                 var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
-                var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+                var iSp = sp.GetRequiredService<IServiceProvider>();
                 var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ>>();
                 var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
 
@@ -81,7 +82,7 @@ namespace MyApi1
                     retryCount = int.Parse(Configuration["EventBusRetryCount"]);
                 }
 
-                return new EventBusRabbitMQ(rabbitMQPersistentConnection, logger, iLifetimeScope, eventBusSubcriptionsManager, subscriptionClientName, retryCount);
+                return new EventBusRabbitMQ(rabbitMQPersistentConnection, logger, iSp, eventBusSubcriptionsManager, subscriptionClientName, retryCount);
             });
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             services.AddTransient<MyOrderEventHandler>();

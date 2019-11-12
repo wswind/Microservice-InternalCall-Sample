@@ -16,7 +16,7 @@ namespace MyApi1.IntegrationEvents.EventHandling
 
         public Task Handle(MyOrderEvent @event)
         {
-            logger.LogTrace($"event somewhatid:{@event.SomewhatId}");
+            logger.LogInformation($"---- event somewhatid:{@event.SomewhatId}");
             return Task.CompletedTask;
         }
     }
