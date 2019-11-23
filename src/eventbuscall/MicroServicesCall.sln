@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7CB158B4-B6E7-4CB9-AB49-74ED4EECB2AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyApi1", "src\MyApi1\MyApi1.csproj", "{C9E25FA2-86FB-421C-9A4D-D5F07FA66AEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyApi1", "MyApi1\MyApi1.csproj", "{C9E25FA2-86FB-421C-9A4D-D5F07FA66AEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "src\EventBus\EventBus.csproj", "{082CBD0D-6CA6-4843-915C-5F509CA2DFC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "EventBus\EventBus.csproj", "{082CBD0D-6CA6-4843-915C-5F509CA2DFC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "src\EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{1865E3D8-15A3-45BD-8D50-C29E320342D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{1865E3D8-15A3-45BD-8D50-C29E320342D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationEventLogEF", "src\IntegrationEventLogEF\IntegrationEventLogEF.csproj", "{3F190EAA-18A8-47CD-9738-F9A74E0D675A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationEventLogEF", "IntegrationEventLogEF\IntegrationEventLogEF.csproj", "{3F190EAA-18A8-47CD-9738-F9A74E0D675A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
