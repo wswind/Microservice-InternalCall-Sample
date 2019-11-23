@@ -29,10 +29,12 @@ namespace api1
         {
             services.AddControllers();
             string doubleUrl = Configuration.GetValue<string>("GatewayUrl");
+            string token = "";
             HttpApi.Register<ICallService>().ConfigureHttpApiConfig(c =>
             {
                 c.HttpHost = new Uri(doubleUrl);
                 //c.FormatOptions.DateTimeFormat = DateTimeFormats.ISO8601_WithMillisecond;
+                c.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
             }); ;
         }
 

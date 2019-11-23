@@ -3,6 +3,7 @@
 
 
 using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 
 namespace identityserver
@@ -24,6 +25,7 @@ namespace identityserver
             };
 
 
+
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
@@ -35,8 +37,8 @@ namespace identityserver
 
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
-
-                    AllowedScopes = { "api1" }
+                    AccessTokenLifetime = (int)TimeSpan.FromDays(36500).TotalSeconds,
+                    AllowedScopes = { "api1" }                
                 },
 
                 // MVC client using code flow + pkce
