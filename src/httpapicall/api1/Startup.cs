@@ -28,11 +28,11 @@ namespace api1
 
 
 
-        static async Task<TokenResponse> RequestTokenAsync()
+        static async Task<TokenResponse> RequestTokenAsync(string idsUrl)
         {
             var client = new HttpClient();
 
-            var disco = await client.GetDiscoveryDocumentAsync("http://localhost:5010/");
+            var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest {Address = idsUrl,Policy = new DiscoveryPolicy {RequireHttps = false } });
             if (disco.IsError) throw new Exception(disco.Error);
 
             var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
@@ -53,7 +53,7 @@ namespace api1
         {
             services.AddControllers();
             string doubleUrl = Configuration.GetValue<string>("GatewayUrl");
-            string token = RequestTokenAsync().GetAwaiter().GetResult().AccessToken;
+            string token = RequestTokenAsync("http://localhost:5010").GetAwaiter().GetResult().AccessToken;
             HttpApi.Register<ICallService>().ConfigureHttpApiConfig(c =>
             {
                 c.HttpHost = new Uri(doubleUrl);
