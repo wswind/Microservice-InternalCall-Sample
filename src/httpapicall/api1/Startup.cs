@@ -32,12 +32,13 @@ namespace api1
         {
             var client = new HttpClient();
 
-            var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest {Address = idsUrl,Policy = new DiscoveryPolicy {RequireHttps = false } });
-            if (disco.IsError) throw new Exception(disco.Error);
-
+            //var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest {Address = idsUrl,Policy = new DiscoveryPolicy {RequireHttps = false } });
+            //if (disco.IsError) throw new Exception(disco.Error);
+            //string tokenUrl = disco.TokenEndpoint;
+            string tokenUrl = $"{idsUrl}/connect/token";
             var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
             {
-                Address = disco.TokenEndpoint,
+                Address = tokenUrl,
 
                 ClientId = "client",
                 ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A",
@@ -52,11 +53,11 @@ namespace api1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            string doubleUrl = Configuration.GetValue<string>("GatewayUrl");
-            string token = RequestTokenAsync("http://localhost:5010").GetAwaiter().GetResult().AccessToken;
+            string gatewayUrl = Configuration.GetValue<string>("GatewayUrl");
+            string token = RequestTokenAsync($"{gatewayUrl}/ids").GetAwaiter().GetResult().AccessToken;
             HttpApi.Register<ICallService>().ConfigureHttpApiConfig(c =>
             {
-                c.HttpHost = new Uri(doubleUrl);
+                c.HttpHost = new Uri(gatewayUrl);
                 //c.FormatOptions.DateTimeFormat = DateTimeFormats.ISO8601_WithMillisecond;
                 c.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
             }); ;
