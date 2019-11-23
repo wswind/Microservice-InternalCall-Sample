@@ -29,7 +29,7 @@ namespace api1
         {
             services.AddControllers();
             string doubleUrl = Configuration.GetValue<string>("GatewayUrl");
-            string token = "";
+            string token = "eyJhbGciOiJSUzI1NiIsImtpZCI6Im05ZGVfdWotNHNLNFJoa3h5ZmpSa1EiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE1NzQ1MTMwMTYsImV4cCI6MTg4OTg3MzAxNiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MDEwIiwiYXVkIjoiYXBpMSIsImNsaWVudF9pZCI6ImNsaWVudCIsInNjb3BlIjpbImFwaTEiXX0.UvLzjZaWy-agu-vf3NWGYIlJOIAaayJwV3ms9jxV9A3DKtNBnCYcgJJl3P36kQuXg4jl-JqLvYjnXnCbAUYoRMxqMludRPk75JF7ngiIZmOKAJjLpAQDdjf1BbzvUynabGCXR0cJ2DIHMU1UasFXYXOav_-jc7_Alo11rR6XpkaJeeJg3LyRIGaS7ubfjQnH7wAN8MGK4ErKvtj77IMKFKoc-3Tjfp-sOc9K3x5xL0ouF8kD_jbdNmQixq9Z0Gp3oPrVJhqe_FcO9_E6nBSKlkV390bw5xPBE_ukCit1xZPFasyT0w1r3qRusEzMXv-6G1uVJt_ZOuSWNzeUl33IDQ";
             HttpApi.Register<ICallService>().ConfigureHttpApiConfig(c =>
             {
                 c.HttpHost = new Uri(doubleUrl);
