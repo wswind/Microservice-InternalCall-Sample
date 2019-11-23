@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebApiClient;
 using api1.Services;
+using IdentityModel.Client;
+using System.Net.Http;
 
 namespace api1
 {
@@ -24,12 +26,34 @@ namespace api1
 
         public IConfiguration Configuration { get; }
 
+
+
+        static async Task<TokenResponse> RequestTokenAsync()
+        {
+            var client = new HttpClient();
+
+            var disco = await client.GetDiscoveryDocumentAsync("http://localhost:5010/");
+            if (disco.IsError) throw new Exception(disco.Error);
+
+            var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+
+                ClientId = "client",
+                ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A",
+                //Scope = "IdentityServerApi"
+            });
+
+            if (response.IsError) throw new Exception(response.Error);
+            return response;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
             string doubleUrl = Configuration.GetValue<string>("GatewayUrl");
-            string token = "eyJhbGciOiJSUzI1NiIsImtpZCI6Im05ZGVfdWotNHNLNFJoa3h5ZmpSa1EiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE1NzQ1MTMwMTYsImV4cCI6MTg4OTg3MzAxNiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MDEwIiwiYXVkIjoiYXBpMSIsImNsaWVudF9pZCI6ImNsaWVudCIsInNjb3BlIjpbImFwaTEiXX0.UvLzjZaWy-agu-vf3NWGYIlJOIAaayJwV3ms9jxV9A3DKtNBnCYcgJJl3P36kQuXg4jl-JqLvYjnXnCbAUYoRMxqMludRPk75JF7ngiIZmOKAJjLpAQDdjf1BbzvUynabGCXR0cJ2DIHMU1UasFXYXOav_-jc7_Alo11rR6XpkaJeeJg3LyRIGaS7ubfjQnH7wAN8MGK4ErKvtj77IMKFKoc-3Tjfp-sOc9K3x5xL0ouF8kD_jbdNmQixq9Z0Gp3oPrVJhqe_FcO9_E6nBSKlkV390bw5xPBE_ukCit1xZPFasyT0w1r3qRusEzMXv-6G1uVJt_ZOuSWNzeUl33IDQ";
+            string token = RequestTokenAsync().GetAwaiter().GetResult().AccessToken;
             HttpApi.Register<ICallService>().ConfigureHttpApiConfig(c =>
             {
                 c.HttpHost = new Uri(doubleUrl);

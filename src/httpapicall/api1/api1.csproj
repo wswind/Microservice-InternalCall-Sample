@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="identitymodel" Version="4.1.0" />
     <PackageReference Include="identityserver4.accesstokenvalidation" Version="3.0.1" />
     <PackageReference Include="WebApiClient.JIT" Version="1.1.0" />
   </ItemGroup>
