@@ -5,7 +5,7 @@ namespace api1.Services
 {
     public interface ICallService : IHttpApi
     {
-        [HttpGet("Double")]
+        [HttpGet("api2/Double")]
         ITask<int> GetDouble(int i);
     }
 }
