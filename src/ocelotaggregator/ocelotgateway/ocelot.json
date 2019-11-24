@@ -47,8 +47,8 @@
         "Api1",
         "Api2"
       ],
-      "UpstreamPathTemplate": "/agg" //,
-      //"Aggregator": "BillUserNameAggregator"
+      "UpstreamPathTemplate": "/agg" ,
+      "Aggregator": "BillUserNameAggregator"
     }
   ],
   "GlobalConfiguration": {

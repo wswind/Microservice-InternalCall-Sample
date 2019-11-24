@@ -30,7 +30,7 @@ namespace ocelotgateway
                        .AddEnvironmentVariables();
                })
                .ConfigureServices(s => {
-                   s.AddOcelot();//.AddSingletonDefinedAggregator<BillUserNameAggregator>(); 
+                   s.AddOcelot().AddSingletonDefinedAggregator<BillUserNameAggregator>(); 
                })
                .ConfigureLogging((hostingContext, loggingbuilder) =>
                {
