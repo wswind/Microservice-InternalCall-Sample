@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using agg.HttpApis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using WebApiClient;
 
 namespace agg
@@ -28,15 +30,30 @@ namespace agg
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //string gatewayUrl = Configuration.GetValue<string>("GatewayUrl");
+            services.AddHttpContextAccessor();
+            string gatewayUrl = Configuration.GetValue<string>("GatewayUrl");
+            services.AddScoped<IBillService>(sp => {
+                var httpContext = sp.GetRequiredService<IHttpContextAccessor>();
+                httpContext.HttpContext.Request.Headers.TryGetValue("Authorization", out StringValues values);
+                var bearer = values.FirstOrDefault();
+                var apiConfig = new HttpApiConfig { HttpHost = new Uri(gatewayUrl) };
+                apiConfig.HttpClient.DefaultRequestHeaders.Clear();
+                apiConfig.HttpClient.DefaultRequestHeaders.Add("Authorization", bearer);
+                var billApi = HttpApi.Create<IBillService>(apiConfig);
+                return billApi;
+            });
             //HttpApi.Register<IBillService>().ConfigureHttpApiConfig(c =>
             //{
             //    c.HttpHost = new Uri(gatewayUrl);
-            //});
+
+            //    c.HttpClient.DefaultRequestHeaders =
+            // });
             //HttpApi.Register<IUserService>().ConfigureHttpApiConfig(c =>
             //{
             //    c.HttpHost = new Uri(gatewayUrl);
             //});
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

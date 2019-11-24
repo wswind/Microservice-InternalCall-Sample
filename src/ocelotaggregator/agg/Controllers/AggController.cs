@@ -17,33 +17,19 @@ namespace agg.Controllers
     [Route("[controller]")]
     public class AggController : ControllerBase
     {
-        
         private readonly ILogger<AggController> _logger;
-        //private readonly string _billUrl;
-        //private readonly string _userUrl;
-        private readonly string _gatewayUrl;
+        private readonly IBillService _billService;
 
-        public AggController(ILogger<AggController> logger, IConfiguration configuration)
+        public AggController(ILogger<AggController> logger, IConfiguration configuration, IBillService billService)
         {
             _logger = logger;
-            _gatewayUrl = configuration.GetValue<string>("GatewayUrl");
-            //_billUrl = gatewayUrl + "/api1/bill";
-            //_userUrl = gatewayUrl + "/api2/user";
+            _billService = billService;
         }
 
         public async Task<IActionResult>  GetBillWithUserName()
         {
-            var apiConfig = new HttpApiConfig { HttpHost = new Uri(_gatewayUrl) };
-            
-            HttpContext.Request.Headers.TryGetValue("Authorization",out StringValues values);
-            var bearer = values.FirstOrDefault();
-            apiConfig.HttpClient.DefaultRequestHeaders.Add("Authorization", bearer);
-            var billApi = HttpApi.Create<IBillService>(apiConfig);
-            var bills = await billApi.GetBills();
+            var bills = await _billService.GetBills();
             return Ok(bills);
-            //HttpApi.Create<IBillService>(new HttpApiConfig { HttpHost })
-
-
         }
     }
 }
