@@ -1,13 +1,11 @@
 ﻿using api2.Dtos;
 using System.Collections.Generic;
-using WebApiClient;
-using WebApiClient.Attributes;
+using System.Threading.Tasks;
 
 namespace agg.HttpApis
 {
-    public interface IUserService : IHttpApi
+    public interface IUserService 
     {
-        [HttpGet("api2/User")]
-        ITask<List<UserInfoDto>> GetUsers();
+        Task<List<UserInfoDto>> GetUsers();
     }
 }

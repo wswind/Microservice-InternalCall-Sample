@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using api1.Services;
+﻿using api1.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using WebApiClient;
+using System.Threading.Tasks;
 
 namespace api1.Controllers
 {
@@ -24,11 +20,12 @@ namespace api1.Controllers
         }
 
         [HttpGet]
-        public async Task<int> Get()
+        public Task<int> Get()
         {
-            var api = HttpApi.Resolve<ICallService>();
-            int result = await api.GetDouble(1);
-            return result;
+            //var api = HttpApi.Resolve<ICallService>();
+            //int result = await api.GetDouble(1);
+            //return result;
+            throw new System.NotImplementedException();
         }
     }
 }

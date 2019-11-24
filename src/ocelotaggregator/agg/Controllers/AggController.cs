@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using agg.AggDtos;
-using agg.HttpApis;
-using api1.Dtos;
+﻿using agg.HttpApis;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
-using WebApiClient;
+using System.Threading.Tasks;
 
 namespace agg.Controllers
 {

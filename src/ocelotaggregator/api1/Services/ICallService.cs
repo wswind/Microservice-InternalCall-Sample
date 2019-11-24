@@ -1,11 +1,9 @@
-﻿using WebApiClient;
-using WebApiClient.Attributes;
+﻿using System.Threading.Tasks;
 
 namespace api1.Services
 {
-    public interface ICallService : IHttpApi
+    public interface ICallService 
     {
-        [HttpGet("api2/Double")]
-        ITask<int> GetDouble(int i);
+        Task<int> GetDouble(int i);
     }
 }
