@@ -60,7 +60,7 @@ namespace api1
                 c.HttpHost = new Uri(gatewayUrl);
                 //c.FormatOptions.DateTimeFormat = DateTimeFormats.ISO8601_WithMillisecond;
                 c.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            }); ;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ocelotgateway", "ocelotgate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "identityserver", "identityserver\identityserver.csproj", "{B6D67EB3-9B64-4CA1-8D89-0B466969DDD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agg", "agg\agg.csproj", "{7A580BBC-1243-4676-8CAF-FEE42095C9DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{B6D67EB3-9B64-4CA1-8D89-0B466969DDD5}.Release|x64.Build.0 = Release|Any CPU
 		{B6D67EB3-9B64-4CA1-8D89-0B466969DDD5}.Release|x86.ActiveCfg = Release|Any CPU
 		{B6D67EB3-9B64-4CA1-8D89-0B466969DDD5}.Release|x86.Build.0 = Release|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Debug|x64.Build.0 = Debug|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Debug|x86.Build.0 = Debug|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Release|x64.ActiveCfg = Release|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Release|x64.Build.0 = Release|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{7A580BBC-1243-4676-8CAF-FEE42095C9DB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
