@@ -33,6 +33,10 @@ namespace agg
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                 .AddPolicyHandler(GetRetryPolicy())
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
+            services.AddHttpClient<IUserService, UserService>()
+               .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+               .AddPolicyHandler(GetRetryPolicy())
+               .AddPolicyHandler(GetCircuitBreakerPolicy());
         }
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
