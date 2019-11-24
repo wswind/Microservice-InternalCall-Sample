@@ -43,8 +43,11 @@ namespace api2
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     NameClaimType = "name",
-                    RoleClaimType = "role"
+                    RoleClaimType = "role",
+                    ClockSkew = TimeSpan.FromMinutes(15)
+
                 };
+                
 
             });
             services.AddControllers();
