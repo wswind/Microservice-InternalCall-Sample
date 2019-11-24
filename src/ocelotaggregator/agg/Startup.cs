@@ -36,11 +36,25 @@ namespace agg
                 var httpContext = sp.GetRequiredService<IHttpContextAccessor>();
                 httpContext.HttpContext.Request.Headers.TryGetValue("Authorization", out StringValues values);
                 var bearer = values.FirstOrDefault();
+                if(string.IsNullOrWhiteSpace(bearer))
+                {
+                    throw new Exception("Need Authorization Bearer Token in Header!");
+                }
+
                 var apiConfig = new HttpApiConfig { HttpHost = new Uri(gatewayUrl) };
                 apiConfig.HttpClient.DefaultRequestHeaders.Clear();
                 apiConfig.HttpClient.DefaultRequestHeaders.Add("Authorization", bearer);
                 var billApi = HttpApi.Create<IBillService>(apiConfig);
                 return billApi;
+
+                //
+                //HttpApi.Register<IBillService>().ConfigureHttpApiConfig(c =>
+                //{
+                //    c.HttpHost = new Uri(gatewayUrl);
+                //    c.HttpClient.DefaultRequestHeaders.Clear();
+                //    c.HttpClient.DefaultRequestHeaders.Add("Authorization", bearer);
+                //});
+                //return HttpApi.Resolve<IBillService>();
             });
             //HttpApi.Register<IBillService>().ConfigureHttpApiConfig(c =>
             //{
