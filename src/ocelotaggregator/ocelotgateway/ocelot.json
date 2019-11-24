@@ -1,19 +1,8 @@
 {
   "ReRoutes": [
+
     {
-      "DownstreamPathTemplate": "/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5002
-        }
-      ],
-      "UpstreamPathTemplate": "/api2/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamPathTemplate": "/bill",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -21,8 +10,23 @@
           "Port": 5001
         }
       ],
-      "UpstreamPathTemplate": "/api1/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamPathTemplate": "/api1",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "Key": "Api1"
+
+    },
+    {
+      "DownstreamPathTemplate": "/user",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/api2",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "Key": "Api2"
     },
     {
       "DownstreamPathTemplate": "/{everything}",
@@ -35,6 +39,16 @@
       ],
       "UpstreamPathTemplate": "/ids/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    }
+  ],
+  "Aggregates": [
+    {
+      "ReRouteKeys": [
+        "Api1",
+        "Api2"
+      ],
+      "UpstreamPathTemplate": "/agg" //,
+      //"Aggregator": "BillUserNameAggregator"
     }
   ],
   "GlobalConfiguration": {

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Ocelot.Middleware;
 using Ocelot.DependencyInjection;
+using ocelotgateway.aggregators;
 
 namespace ocelotgateway
 {
@@ -29,7 +30,7 @@ namespace ocelotgateway
                        .AddEnvironmentVariables();
                })
                .ConfigureServices(s => {
-                   s.AddOcelot();
+                   s.AddOcelot();//.AddSingletonDefinedAggregator<BillUserNameAggregator>(); 
                })
                .ConfigureLogging((hostingContext, loggingbuilder) =>
                {
