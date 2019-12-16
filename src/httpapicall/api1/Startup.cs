@@ -14,6 +14,7 @@ using WebApiClient;
 using api1.Services;
 using IdentityModel.Client;
 using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace api1
 {
@@ -26,41 +27,56 @@ namespace api1
 
         public IConfiguration Configuration { get; }
 
+        //static async Task<TokenResponse> RequestTokenAsync(string idsUrl)
+        //{
+        //    var client = new HttpClient();
 
+        //    //var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest {Address = idsUrl,Policy = new DiscoveryPolicy {RequireHttps = false } });
+        //    //if (disco.IsError) throw new Exception(disco.Error);
+        //    //string tokenUrl = disco.TokenEndpoint;
+        //    string tokenUrl = $"{idsUrl}/connect/token";
+        //    var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+        //    {
+        //        Address = tokenUrl,
 
-        static async Task<TokenResponse> RequestTokenAsync(string idsUrl)
-        {
-            var client = new HttpClient();
+        //        ClientId = "client",
+        //        ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A",
+        //        //Scope = "IdentityServerApi"
+        //    });
 
-            //var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest {Address = idsUrl,Policy = new DiscoveryPolicy {RequireHttps = false } });
-            //if (disco.IsError) throw new Exception(disco.Error);
-            //string tokenUrl = disco.TokenEndpoint;
-            string tokenUrl = $"{idsUrl}/connect/token";
-            var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-            {
-                Address = tokenUrl,
-
-                ClientId = "client",
-                ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A",
-                //Scope = "IdentityServerApi"
-            });
-
-            if (response.IsError) throw new Exception(response.Error);
-            return response;
-        }
+        //    if (response.IsError) throw new Exception(response.Error);
+        //    return response;
+        //}
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            string gatewayUrl = Configuration.GetValue<string>("GatewayUrl");
-            string token = RequestTokenAsync($"{gatewayUrl}/ids").GetAwaiter().GetResult().AccessToken;
-            HttpApi.Register<ICallService>().ConfigureHttpApiConfig(c =>
-            {
-                c.HttpHost = new Uri(gatewayUrl);
-                //c.FormatOptions.DateTimeFormat = DateTimeFormats.ISO8601_WithMillisecond;
-                c.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            }); ;
+            //string gatewayUrl = Configuration.GetValue<string>("GatewayUrl");
+            //string token = RequestTokenAsync($"{gatewayUrl}/ids").GetAwaiter().GetResult().AccessToken;
+            //HttpApi.Register<ICallService>().ConfigureHttpApiConfig(c =>
+            //{
+            //    c.HttpHost = new Uri(gatewayUrl);
+            //    //c.FormatOptions.DateTimeFormat = DateTimeFormats.ISO8601_WithMillisecond;
+            //    c.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            //}); 
+            //token´«µÝ
+            services.AddHttpClient<ICallService>()
+                    .AddTypedClient((client, p) =>
+                    {
+                        ////get token
+                        //var httpContextAccessor = p.GetService<IHttpContextAccessor>();
+                        //var authorizationHeader = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+                        //client.DefaultRequestHeaders.Add("Authorization", new List<string>() { authorizationHeader });
+                        var httpApiConfig = new HttpApiConfig(client)
+                        {
+                            HttpHost = new Uri("http://localhost:9999/"),
+                            LoggerFactory = p.GetRequiredService<ILoggerFactory>()
+                        };
+
+                        return HttpApi.Create<ICallService>(httpApiConfig);
+                    })
+                    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
