@@ -31,8 +31,17 @@ namespace api1.Controllers
         [HttpGet]
         public async Task<int> Get()
         {
-            int result = await _callService.GetDouble(1);
-            return result;
+            try
+            {
+                int result = await _callService.GetDouble(1);
+                return result;
+            }
+            catch(HttpStatusFailureException ex)
+            {
+                return 0;
+            }
+            
+            
         }
     }
 }

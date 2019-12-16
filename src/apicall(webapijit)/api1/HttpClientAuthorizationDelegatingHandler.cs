@@ -26,7 +26,8 @@ namespace api1
                 request.Headers.Add("Authorization", new List<string>() { authorizationHeader });
             }
 
-            return await base.SendAsync(request, cancellationToken);
+            var responseMessage = await base.SendAsync(request, cancellationToken);
+            return responseMessage;
         }
 
     }
