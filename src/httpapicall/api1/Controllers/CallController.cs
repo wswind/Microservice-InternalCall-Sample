@@ -17,17 +17,21 @@ namespace api1.Controllers
         private readonly string baseUrl;
 
         private readonly ILogger<CallController> _logger;
+        private readonly ICallService _callService;
 
-        public CallController(ILogger<CallController> logger, IConfiguration configuration)
+        public CallController(ILogger<CallController> logger,
+            IConfiguration configuration,
+            ICallService callService
+            )
         {
             _logger = logger;
+            _callService = callService;
         }
 
         [HttpGet]
         public async Task<int> Get()
         {
-            var api = HttpApi.Resolve<ICallService>();
-            int result = await api.GetDouble(1);
+            int result = await _callService.GetDouble(1);
             return result;
         }
     }

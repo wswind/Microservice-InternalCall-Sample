@@ -15,6 +15,7 @@ using api1.Services;
 using IdentityModel.Client;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
+using WebApiClient.Extensions.HttpClientFactory;
 
 namespace api1
 {
@@ -52,31 +53,28 @@ namespace api1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //string gatewayUrl = Configuration.GetValue<string>("GatewayUrl");
-            //string token = RequestTokenAsync($"{gatewayUrl}/ids").GetAwaiter().GetResult().AccessToken;
-            //HttpApi.Register<ICallService>().ConfigureHttpApiConfig(c =>
-            //{
-            //    c.HttpHost = new Uri(gatewayUrl);
-            //    //c.FormatOptions.DateTimeFormat = DateTimeFormats.ISO8601_WithMillisecond;
-            //    c.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            //}); 
-            //token´«µÝ
-            services.AddHttpClient<ICallService>()
-                    .AddTypedClient((client, p) =>
-                    {
-                        ////get token
-                        //var httpContextAccessor = p.GetService<IHttpContextAccessor>();
-                        //var authorizationHeader = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-                        //client.DefaultRequestHeaders.Add("Authorization", new List<string>() { authorizationHeader });
-                        var httpApiConfig = new HttpApiConfig(client)
-                        {
-                            HttpHost = new Uri("http://localhost:9999/"),
-                            LoggerFactory = p.GetRequiredService<ILoggerFactory>()
-                        };
+            string gatewayUrl = Configuration.GetValue<string>("GatewayUrl");
+            services.AddHttpContextAccessor();
+            services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
+            services.AddHttpApiTypedClient<ICallService>(
+                c =>
+            {
+                c.HttpHost = new Uri(gatewayUrl);
+                //c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
+            }).AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            //IHttpClientBuilder httpClientBuilder = services.AddHttpApiTypedClient<ICallService>(//)
+            //         (p, client) =>
+            //        {
+            //            var httpApiConfig = new HttpApiConfig(client)
+            //            {
+            //                HttpHost = new Uri(gatewayUrl),
+            //                LoggerFactory = p.GetRequiredService<ILoggerFactory>()
+            //            };
 
-                        return HttpApi.Create<ICallService>(httpApiConfig);
-                    })
-                    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            //            return HttpApi.Create<ICallService>(httpApiConfig);
+            //        })
+            //        //token´«µÝ
+            //       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
