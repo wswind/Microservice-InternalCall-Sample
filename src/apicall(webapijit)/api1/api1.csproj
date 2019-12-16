@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="identitymodel" Version="4.1.0" />
+    <PackageReference Include="identityserver4.accesstokenvalidation" Version="3.0.1" />
+    <PackageReference Include="WebApiClient.Extensions.HttpClientFactory" Version="2.1.0" />
+    <PackageReference Include="WebApiClient.JIT" Version="1.1.0" />
+  </ItemGroup>
+
+</Project>
